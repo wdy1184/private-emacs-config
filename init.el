@@ -27,41 +27,47 @@ values."
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path '("/Users/wudanyang/.spacemacs.d/private/")
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     html
      ;; program language layers
+     sql
      php
+     phpplus
+     html
      python
      go
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
+     javascript
+     emacs-lisp
+     
+     ;; tags
      (gtags :variables
             gtags-enable-by-default t)
+
+     ;; 自动补全
      helm
      auto-completion
-     ;; better-defaults
-     emacs-lisp
+
+     ;; version control
+     version-control
      git
-     markdown
-     ;; org-mode 导出ppt，有问题：目录太多时，ppt将其他的目录给隐藏掉了
+
+     ;; note
      (org :variables
           org-enable-reveal-js-support t
           org-reveal-root "file:///Users/wudanyang/.spacemacs.d/reveal.js")
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     markdown
+
+     ;; interface
+
+     ;; other
      spell-checking
      syntax-checking
-     ;; version-control
      (chinese :packages youdao-dictionary fcitx
               :variables chinese-enable-fcitx nil
               chinese-enable-youdao-dict t)
+     better-defaults
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -139,8 +145,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(monokai
+                         wombat)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -244,11 +250,11 @@ values."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 80
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 80
    ;; If non nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
    ;; If non nil show the color guide hint for transient state keys. (default t)
@@ -294,6 +300,7 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
+
    ))
 
 (defun dotspacemacs/user-init ()
@@ -309,25 +316,26 @@ before packages are loaded. If you are unsure, you should try in setting them in
       ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
   )
 
+;; user-config start
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
-  (spacemacs//set-monospaced-font   "Source Code Pro" "Hiragino Sans GB" 14 16)
-  ;; Do not write anything past this comment. This is where Emacs will
-  ;; auto-generate custom variable definitions.
+  ;; interface
+  (spacemacs//set-monospaced-font "Source Code Pro" "hiragino sans" 14 16)
+  (spacemacs/toggle-line-numbers)
+
+  ;; org mode
+  (eval-after-load "org"
+    '(require 'ox-md nil t))
+
+  ;; others
+
+  (add-hook 'php-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+
+  ;; custom variables 
   (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  '(company-idle-delay 0.1)
-  '(company-minimum-prefix-length 1))
-  '(projectile-enable-caching t)
-  )
+    '(company-idle-delay 0.1)
+    '(company-minimum-prefix-length 1)
+    '(projectile-enable-caching t)))
+;; user-config end
 
  '(package-selected-packages
    (quote
@@ -338,3 +346,15 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-idle-delay 0.1)
+ '(company-minimum-prefix-length 1)
+ '(evil-want-Y-yank-to-eol nil)
+ '(package-selected-packages
+   (quote
+    (php-mode sql-indent zonokai-theme zenburn-theme zen-and-art-theme wakatime-mode underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pastels-on-dark-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode xterm-color shell-pop mwim multi-term git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter eshell-z eshell-prompt-extras esh-help diff-hl youdao-dictionary yapfify ws-butler window-numbering which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spacemacs-theme spaceline smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el paradox ox-reveal orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum live-py-mode linum-relative link-hint less-css-mode info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav dumb-jump drupal-mode define-word cython-mode company-web company-statistics company-go company-anaconda column-enforce-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(projectile-enable-caching t))
