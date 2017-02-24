@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: pubf
+# key: pubf
+# --
+public function $1($2) {
+    $0
+}

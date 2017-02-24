@@ -324,7 +324,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; interface
   (spacemacs//set-monospaced-font "Source Code Pro" "hiragino sans" 13 15)
   (spacemacs/toggle-line-numbers)
+  (fset 'add_semicolon
+    [?A ?\; escape])
+  (global-set-key (kbd "C-a") 'add_semicolon)
 
+  (modify-syntax-entry ?_ "w")
   ;; org mode
   (eval-after-load "org"
     '(require 'ox-md nil t))
@@ -343,7 +347,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(company-idle-delay 0.5 t)
+ '(company-idle-delay 0.2 t)
  ;; '(disable-mouse-mode 1)
  '(company-minimum-prefix-length 2 t)
  '(evil-want-Y-yank-to-eol nil)

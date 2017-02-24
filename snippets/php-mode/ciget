@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ciget
+# key: ciget
+# --
+$this->input->get();

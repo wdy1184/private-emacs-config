@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ciconf
+# key: ciconf
+# --
+$this->config->item($0);
