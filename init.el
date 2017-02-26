@@ -51,7 +51,6 @@ values."
      (auto-completion :variables
                         auto-completion-enable-snippets-in-popup t)
 
-
      ;; version control
      version-control
      git
@@ -112,7 +111,7 @@ values."
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
    ;; whenever you start Emacs. (default nil)
-   dotspacemacs-check-for-update nil
+   dotspacemacs-check-for-update 't
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
    ;; to `emacs-version'.
@@ -144,7 +143,7 @@ values."
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
-   dotspacemacs-scratch-mode 'text-mode
+   dotspacemacs-scratch-mode 'python-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
@@ -333,6 +332,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (eval-after-load "org"
     '(require 'ox-md nil t))
 
+  ;; (add-to-list 'ispell-local-dictionary-alist
+  ;;              (quote ("my_english" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_US") nil utf-8)))
   ;; others
   (add-hook 'php-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 )
