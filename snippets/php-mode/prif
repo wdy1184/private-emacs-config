@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: prif
+# key: prif
+# --
+private function $1($2) {
+    $0
+}

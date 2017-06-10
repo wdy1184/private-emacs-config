@@ -2,4 +2,4 @@
 # name: ciget
 # key: ciget
 # --
-$this->input->get();
+$this->input->get($0);

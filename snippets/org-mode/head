@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: head
+# key: head
+# --
+
+#+TITLE: $1
+#+DATE: $2
+#+TAGS: $3
+#+LAYOUT: post
+#+CATEGORIES: $0
+#+OPTIONS: ^:nil _:nil f:nil toc:t num:t
