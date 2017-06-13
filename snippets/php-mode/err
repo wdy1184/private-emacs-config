@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: err
+# key: err
+# --
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
