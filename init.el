@@ -62,8 +62,7 @@ values."
                       version-control-diff-tool 'diff-hl
                       version-control-global-margin t
                       version-control-diff-side 'left)
-     (php :variables
-          php-auto-yasnippet-php-program "~/.emacs.d/elpa/php-auto-yasnippets-20170330.1814/Create-PHP-YASnippet.php")
+     php
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -375,7 +374,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
- '(company-idle-delay 1 t)
+ '(company-idle-delay 0.8 t)
  '(company-minimum-prefix-length 3 t)
  '(evil-want-Y-yank-to-eol nil)
  '(fill-column 120)
