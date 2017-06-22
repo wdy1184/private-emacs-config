@@ -50,7 +50,10 @@ values."
      imenu-list
      dash
 
-     (chinese :variables chinese-enable-fcitx nil)
+     (chinese :variables
+              chinese-enable-youdao-dict t
+              chinese-enable-fcitx t
+              chinese-enable-avy-pinyin nil)
      (gtags :variables
             gtags-enable-by-default t)
      ;; auto
@@ -146,7 +149,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Monaco"
+   dotspacemacs-default-font '("Source Code Pro"
                                :size 14
                                :weight normal
                                :width normal
@@ -192,7 +195,7 @@ values."
    dotspacemacs-display-default-layout t
    ;; If non nil then the last auto saved layouts are resume automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts nil
+   dotspacemacs-auto-resume-layouts t
    ;; Size (in MB) above which spacemacs will prompt to open the large file
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
@@ -205,10 +208,10 @@ values."
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
-   dotspacemacs-helm-resize nil
+   dotspacemacs-helm-resize t
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
-   dotspacemacs-helm-no-header nil
+   dotspacemacs-helm-no-header t
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
    dotspacemacs-helm-position 'bottom
@@ -317,6 +320,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; (spacemacs//set-monospaced-font "Source Code Pro" "Hiragino Sans GB" 14 16)
   ;; (add-hook 'php-mode-hook (kbd "C-c C-y") 'yas/create-php-snippet) ;; not work
   ;; sbcl env
+  (spacemacs//set-monospaced-font   "Source Code Pro" "Hiragino Sans GB" 14 16)
   (setq inferior-lisp-program "~/ccl/dx86cl64")
   (push "~/self/slime" load-path)
   (require 'slime-autoloads)
@@ -329,7 +333,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; _ as no action
   (add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
-  (add-hook 'php-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  (add-hook 'php-mode-hook #'(lambda () (modify-syntax-entry ?_ "w"))) ;; there is an issue when use php mode. Once you trigger jump handler this is invalid.
   (add-hook 'org-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   (modify-syntax-entry ?_ "w")
   ;; (eval-after-load "org"
@@ -351,8 +355,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq fill-column 120)
   (spacemacs/toggle-fill-column-indicator-on)
   (define-key evil-normal-state-map (kbd "H") (kbd "^"))
-  (define-key evil-normal-state-map (kbd ",;;") (kbd "A;"))
-
+  (setq flycheck-indication-mode 'right-fringe)
 
   ;; There is one second delay between switch input method, so I comment this block of code.
   ;; Make sure the following comes before `(fcitx-aggressive-setup)'
@@ -374,19 +377,13 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
- '(company-idle-delay 0.8 t)
- '(company-minimum-prefix-length 3 t)
+ '(company-idle-delay 0.8)
+ '(company-minimum-prefix-length 3)
  '(evil-want-Y-yank-to-eol nil)
  '(fill-column 120)
  '(geben-path-mappings
    (quote
     (("/Users/wudanyang/workspace/uxin/searchapi.xin.com/trunk" "/home/vagrant/Code/uxin/searchapi.xin.com/trunk"))))
- '(ggtags-auto-jump-to-match (quote history))
- '(ggtags-bounds-of-tag-function
-   (quote
-    #[0 "\300\301!\207"
-        [bounds-of-thing-at-point symbol]
-        2]))
  '(ggtags-sort-by-nearness t)
  '(imenu-list-minor-mode nil)
  '(package-selected-packages
@@ -408,15 +405,21 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(company-idle-delay 0.8 t)
+ '(company-minimum-prefix-length 3 t)
  '(evil-want-Y-yank-to-eol nil)
  '(fill-column 120)
+ '(flycheck-flake8-maximum-line-length 121)
+ '(flycheck-php-phpcs-executable "phpcs -n" nil nil "show no warning")
  '(geben-path-mappings
    (quote
     (("/Users/wudanyang/workspace/uxin/searchapi.xin.com/trunk" "/home/vagrant/Code/uxin/searchapi.xin.com/trunk"))))
  '(imenu-list-minor-mode nil)
  '(package-selected-packages
    (quote
-    (company-php ac-php ac-php-core xcscope smartparens fcitx dash evil helm helm-core markdown-mode company ibuffer-projectile helm-dash dash-at-point imenu-list geben pangu-spacing find-by-pinyin-dired chinese-pyim chinese-pyim-basedict ace-pinyin pinyinlib ace-jump-mode emmet-mode youdao-dictionary yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit sql-indent spaceline smeargle slime-company slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el paradox ox-reveal orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump drupal-mode diff-hl define-word dactyl-mode cython-mode company-web company-tern company-statistics company-go company-anaconda common-lisp-snippets column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (names chinese-word-at-point magit company-php ac-php ac-php-core xcscope smartparens fcitx dash evil helm helm-core markdown-mode company ibuffer-projectile helm-dash dash-at-point imenu-list geben pangu-spacing find-by-pinyin-dired chinese-pyim chinese-pyim-basedict ace-pinyin pinyinlib ace-jump-mode emmet-mode youdao-dictionary yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit sql-indent spaceline smeargle slime-company slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el paradox ox-reveal orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump drupal-mode diff-hl define-word dactyl-mode cython-mode company-web company-tern company-statistics company-go company-anaconda common-lisp-snippets column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-automatically-star t)
  '(paradox-github-token "003ef4138b3208712935d0dbf24c6b3bc6aeaee2"))
 (custom-set-faces
