@@ -353,6 +353,23 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (global-set-key (kbd "M-c") 'vc-next-action)
   (global-set-key (kbd "s-w") 'spacemacs/delete-window)
   (global-set-key (kbd "s-d") 'spacemacs/kill-this-buffer)
+  (global-set-key (kbd "M-b") 'helm-mini)
+  (global-set-key (kbd "C-/") 'comment-line)
+  (global-set-key [?\C-/] 'comment-line)
+  (define-key evil-normal-state-map (kbd "0") (kbd "^"))
+
+  (defvar my-keys-minor-mode-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "C-/") 'comment-line)
+      map)
+    "my-keys-minor-mode keymap.")
+
+  (define-minor-mode my-keys-minor-mode
+    "A minor mode so that my key settings override annoying major modes."
+    :init-value t
+    :lighter " my-keys")
+
+  (my-keys-minor-mode 1)
 
   (setq scroll-conservatively 101
         scroll-margin 0
@@ -364,7 +381,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq column-enforce-column 120)
   (setq fill-column 120)
   (spacemacs/toggle-fill-column-indicator-on)
-  (define-key evil-normal-state-map (kbd "0") (kbd "^"))
   (setq flycheck-indication-mode 'right-fringe)
 
   ;; There is one second delay between switch input method, so I comment this block of code.
