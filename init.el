@@ -352,7 +352,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (global-set-key (kbd "M-p") 'helm-projectile-find-file)
   (global-set-key (kbd "M-c") 'vc-next-action)
   (global-set-key (kbd "M-b") 'helm-mini)
-  (global-set-key (kbd "C-/") 'helm-mini)
   (global-set-key (kbd "s-w") 'spacemacs/delete-window)
   (global-set-key (kbd "s-d") 'spacemacs/kill-this-buffer)
   (define-key evil-normal-state-map (kbd "0") (kbd "^"))
